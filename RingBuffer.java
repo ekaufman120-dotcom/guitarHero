@@ -8,14 +8,14 @@ public class RingBuffer
 {
     public int head;
     public int tail;
-    public Double[] arr;
+    public double[] arr;
 
 
     public RingBuffer(int capacity)
     {
         head = 0;
         tail = 0;
-        arr = new Double[capacity];
+        arr = new double[capacity];
     }
 
     public int size()
@@ -36,7 +36,7 @@ public class RingBuffer
         int size = 0;
         for(int i = 0; i < arr.length; i++)
         {
-            if(arr[i]!=null)
+            if(arr[i]!=0)
                 size++;
         }
         return size;
@@ -47,7 +47,7 @@ public class RingBuffer
     {
         for(int i = 0; i < arr.length; i++)
         {
-            if(arr[i]!=null)
+            if(arr[i]!=0)
                 return false;
         }
         return true;
@@ -56,15 +56,15 @@ public class RingBuffer
     //array is considered full if no zeroes are present
     public boolean isFull()
     {   
-        /*
+        
         for(int i = 0; i < arr.length; i++)
         {
             if(arr[i]==0)
                 return false;
         }
         return true;
-        */
-       return tail==head&&arr[head]!=null;
+        
+        //return tail==head&&arr[head]!=null;
     }
     
     public void add(double value) throws IndexOutOfBoundsException
@@ -94,12 +94,14 @@ public class RingBuffer
     
     public double remove()
     {
+        /*
         if(arr[head]==null)
         {
             throw new NullPointerException("Attempted to remove null value from array.");
         }
+        */
         double temp = arr[head];
-        arr[head] = null;
+        arr[head] = 0;
         if(head+1==arr.length)
             head=0;
         else
