@@ -21,10 +21,6 @@ public class GuitarString
             length = ((int)(44100/frequency)) + 1;
         }
         string = new RingBuffer(length);
-        while(!string.isFull())
-        {
-            string.add(0.0);
-        }
     }
 
     public GuitarString(double[] array) 

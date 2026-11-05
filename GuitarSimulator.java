@@ -14,7 +14,13 @@ public class GuitarSimulator
         GuitarString stringA = new GuitarString(440.0);
         GuitarString stringC = new GuitarString(440.0 * Math.pow(2, 3.0/12.0));
         */
-        GuitarString[] strings = new GuitarString(440.0 * Math.pow(1.05956, -24));
+        GuitarString[] strings = new GuitarString[keyboard.length()];
+        for(int i = 0; i < strings.length; i++)
+        {
+            strings[i] = new GuitarString(440.0 * Math.pow(1.05956, i-24));
+        }
+        
+        //new GuitarString(440.0 * Math.pow(1.05956, -24));
 
         // the main input loop
         while (true) 
@@ -26,21 +32,28 @@ public class GuitarSimulator
                 char key = StdDraw.nextKeyTyped();
 
                 // pluck the corresponding string
-                if (key == 'a')
-                    stringA.pluck();
-                if (key == 'c') 
-                    stringC.pluck();
+                for(int i = 0; i < keyboard.length(); i++)
+                {
+                    if(key==keyboard.charAt(i))
+                        strings[i].pluck();
+                }
             }
 
             // compute the superposition of the samples
-            double sample = stringA.sample() + stringC.sample();
+            double sample = 0;
+            for(int i = 0; i < strings.length; i++)
+            {
+                sample+=strings[i].sample();
+            }
 
             // send the result to standard audio
             StdAudio.play(sample);
 
             // advance the simulation of each guitar string by one step
-            stringA.tic();
-            stringC.tic();
+            for(int i = 0; i < strings.length; i++)
+            {
+                strings[i].tic();
+            }
         }
     }
 }
